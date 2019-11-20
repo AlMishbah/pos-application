@@ -20,4 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //user by aldyrifaldi
 Route::post('/login','AuthController@login');
 Route::resource('user', 'AuthController');
-Route::put('/user/image/{user}','AuthController@avatar');
+Route::post('/user/image/{user}','AuthController@avatar');
