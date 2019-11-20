@@ -21,3 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/login','AuthController@login');
 Route::resource('user', 'AuthController');
 Route::post('/user/image/{user}','AuthController@avatar');
+Route::get('/image/{image}',function($image){
+    return response()->file('img'.$image);
+});
