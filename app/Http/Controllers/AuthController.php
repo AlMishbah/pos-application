@@ -90,7 +90,7 @@ class AuthController extends Controller
     public function avatar(Request $request,User $user)
     {
         $validator = Validator::make($request->all(),[
-            'image' => 'required',
+            'image' => 'required|mimes:jpeg,jpg,png',
             
         ]);
 
