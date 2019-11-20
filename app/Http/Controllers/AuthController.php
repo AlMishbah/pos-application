@@ -89,18 +89,7 @@ class AuthController extends Controller
 
     public function avatar(Request $request,User $user)
     {
-        $validator = Validator::make($request->all(),[
-            'image' => 'required|mimes:jpeg,jpg,png',
-            
-        ]);
-
         
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()->toJson(),
-                'status' => 400,
-            ]);
-        }
         $image = time().$request->file('image')->getClientOriginalName();
 
         $user->image = $image;
