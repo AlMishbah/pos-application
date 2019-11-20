@@ -87,7 +87,7 @@ class AuthController extends Controller
 
     }
 
-    public function avatar(Request $request)
+    public function avatar(Request $request,User $user)
     {
         $validator = Validator::make($request->all(),[
             'image' => 'required',
@@ -103,39 +103,13 @@ class AuthController extends Controller
         }
         $image = time().$request->file('image')->getClientOriginalName();
 
-        $avatar = User::create([
-            'image' => $image,
-        ]);
+        $user->image = $image;
 
-        if ($avatar->save()) {
+        if ($user->save()) {
             $request->file('image')->move('img',$image);
             return response()->json(['message' => 'Image uploaded']);
         }
         return response()->json(['message' => 'Image not uploaded']);
-    }
-
-    public function avatarEdit(Request $request,User $user)
-    {
-        $validator = Validator::make($request->all(),[
-            'image' => 'required',
-            
-        ]);
-
-        
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()->toJson(),
-                'status' => 400,
-            ]);
-        }
-
-        $image = time().$request->file('image')->getClientOriginalName();
-        $user->image = $image;
-        if ($user->save()) {
-            $request->file('image')->move('img',$image);
-            return response()->json('message','Image uploaded');
-        }
-        return response()->json('message','Upload failed');
     }
 
     public function destroy(User $user)
